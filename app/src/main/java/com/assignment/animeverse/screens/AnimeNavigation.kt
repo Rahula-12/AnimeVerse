@@ -33,7 +33,9 @@ fun AnimaNavigation(
         })) {backStackEntry->
             val animeId = backStackEntry.arguments?.getInt("animeId")
             animeId?.let {
-                AnimeDetailScreen(modifier,animeState.data!!.animeList[animeId])
+                AnimeDetailScreen(modifier,animeState.data!!.animeList[animeId]){
+                    navController.popBackStack()
+                }
             }
         }
     }
