@@ -2,6 +2,7 @@ package com.assignment.animeverse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.assignment.animeverse.model.AnimeCharacters
 import com.assignment.animeverse.model.AnimeData
 import com.assignment.animeverse.repository.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +27,8 @@ class AnimeViewModel @Inject constructor(private val animeRepository: AnimeRepos
     )
     val animeState: StateFlow<DataOrException<AnimeData>> = _animeState
 
+    private val _animeCharacters:MutableStateFlow<AnimeCharacters> = MutableStateFlow(AnimeCharacters(data = emptyList()))
+    val animeCharacters:StateFlow<AnimeCharacters> = _animeCharacters
     init {
         fetchData()
     }
@@ -51,6 +54,22 @@ class AnimeViewModel @Inject constructor(private val animeRepository: AnimeRepos
                     )
                 }
             }
+        }
+    }
+
+    fun animeCharacters(animeId:String) {
+        viewModelScope.launch {
+            try{
+                val updatedCharacters=animeRepository.getAnimeCharacters(animeId)
+                _animeCharacters.update {
+                    updatedCharacters
+                }
+            }
+           catch (e:Exception) {
+               _animeCharacters.update {
+                   AnimeCharacters(data = emptyList())
+               }
+           }
         }
     }
 
