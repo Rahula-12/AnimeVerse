@@ -117,7 +117,7 @@ fun AnimeDetailScreen(
                         append("Rating: ")
                     }
                     withStyle(style= SpanStyle()) {
-                        append(anime.rating)
+                        append(anime.score.toString())
                     }
                 },modifier=modifier.fillMaxWidth(), textAlign = TextAlign.Center)
                 Text(text = buildAnnotatedString {

@@ -109,7 +109,7 @@ fun AnimeListItem(modifier: Modifier=Modifier,anime: Anime) {
                     append("Rating: ")
                 }
                 withStyle(style= SpanStyle()) {
-                    append(anime.rating)
+                    append(anime.score.toString())
                 }
             })
         }
